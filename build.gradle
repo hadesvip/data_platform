@@ -3,13 +3,37 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'war'
-
-sourceCompatibility = 1.5
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'jetty'
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
+
+    //定义版本
+    def veloctiy_version=1.7
+    def velocity_tool_version=2.0
+    def servlet_version =3.1
+    def jstl_version=1.2
+
+
     testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    //velocity
+    compile 'org.apache.velocity:velocity:${veloctiy_version}'
+    compile 'org.apache.velocity:>velocity-tools:${velocity_tool_version}'
+
+    //servlet
+    provideCompile 'javax.servlet:servlet-api:${servlet_version}'
+    runtime 'javax.servlet:jstl:${jstl_version}'
+
+}
+
+jettyRun{
+    httpPort=8080
+    contextPath='/'
 }
